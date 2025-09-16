@@ -1,0 +1,91 @@
+/* colors 
+#33322b
+#7f4721
+#d5c1ac
+#7097a6
+#95b0bf
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #d5c1ac;
+  color: #33322b;
+  font-family: "Sono", sans-serif;
+  padding: 48px 64px 0px;
+}
+
+h1 {
+  font-family: "coiny", sans-serif;
+  font-size: 42px;
+  text-transform: uppercase;
+  line-height: 1;
+  margin-top: 6px;
+}
+
+#root {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 48px;
+  /* height: calc(100vh - 68px - 40px - 48px - 48px); */
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.logo-img {
+  height: 68px;
+  width: 68px;
+}
+
+/* Header */
+
+.header {
+  margin-top: 27px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Button */
+.btn {
+  font-family: "Coiny", sans-serif;
+  line-height: 1;
+  text-transform: uppercase;
+  font-size: 17px;
+  padding: 16px 0 13px;
+  background-image: linear-gradient(135deg, #7097a6, #95b0bf, #f59e0b);
+  color: inherit;
+  border: none;
+  cursor: pointer;
+  border-radius: 100px;
+}
+
+.btn:hover {
+  opacity: 0.8;
+  transition: 0.2s;
+  transform: scale(1.01);
+}
+
+.btn-large {
+  font-size: 20px;
+  padding: 20px 32px 16px;
+}
+
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
