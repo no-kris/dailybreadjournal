@@ -1,4 +1,4 @@
-function Header({ isLoggedIn }) {
+function Header({ isLoggedIn, showForm, setShowForm }) {
   return (
     <header className="header">
       <div className="logo">
@@ -6,7 +6,12 @@ function Header({ isLoggedIn }) {
         <h1>Daily Bread Journal</h1>
       </div>
       {isLoggedIn ? (
-        <button className="btn btn-large btn-share">Add New Prayer</button>
+        <button
+          className="btn btn-large btn-share"
+          onClick={() => setShowForm((showForm) => !showForm)}
+        >
+          {showForm ? "Close" : "Add New Prayer"}
+        </button>
       ) : (
         <div className="auth-buttons">
           <button className="btn btn-large">Log In</button>

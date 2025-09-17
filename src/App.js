@@ -1,23 +1,35 @@
 import { useState } from "react";
 import Header from "./components/Header";
-// import Sidebar from "./components/Sidebar";
+import Sidebar from "./components/Sidebar";
 // import PrayerList from "./components/PrayerList";
 // import AddPrayerForm from "./components/AddPrayerForm";
 import "./styles.css";
+import AddPrayerForm from "./components/AddPrayerForm";
 
 function App() {
-  const { isLoggedIn, setIsLoggedIn } = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const categories = [
+    { name: "General", color: "#3b82f6" },
+    { name: "Thanksgiving", color: "#eab308" },
+    { name: "Requests", color: "#ef4444" },
+    { name: "Healing", color: "#16a34a" },
+  ];
 
   return (
     <>
       <div id="root">
-        <Header isLoggedIn={isLoggedIn} />
+        <Header
+          isLoggedIn={isLoggedIn}
+          showForm={showForm}
+          setShowForm={setShowForm}
+        />
+        {showForm ? (
+          <AddPrayerForm categories={categories} setShowForm={setShowForm} />
+        ) : null}
         <main className="main">
-          {/* <Sidebar />
-        <section>
-          <AddPrayerForm />
-          <PrayerList />
-        </section> */}
+          <Sidebar categories={categories} />{" "}
+          <section>{/* <PrayerList /> */}</section>
         </main>
       </div>
     </>
