@@ -6,7 +6,7 @@ function AddPrayerForm({ categories, setShowForm, setPrayersList }) {
   const [category, setCategory] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const textLength = text.length;
-  const MAX_LENGTH = 200;
+  const MAX_LENGTH = 700;
 
   function handleTextChange(ev) {
     const newText = ev.target.value;
@@ -19,9 +19,17 @@ function AddPrayerForm({ categories, setShowForm, setPrayersList }) {
     ev.preventDefault();
     if (text && category) {
       setIsUploading(true);
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) {
+        alert("You must be logged in to add a prayer.");
+        setIsUploading(false);
+        return;
+      }
       const { data: newPrayer, error } = await supabase
         .from("prayers")
-        .insert([{ text, category }])
+        .insert([{ text, category, user_id: user.id }])
         .select();
       setIsUploading(false);
       if (!error) setPrayersList((prev) => [newPrayer[0], ...prev]);

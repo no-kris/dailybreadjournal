@@ -8,7 +8,7 @@ import supabase from "./supabaseClient";
 import "./styles.css";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [session, setSession] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [prayersList, setPrayersList] = useState([]);
@@ -20,11 +20,29 @@ function App() {
     { name: "Healing", color: "#16a34a" },
   ];
 
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   useEffect(
     function () {
       async function getPrayers() {
+        if (!session) return;
         setIsLoading(true);
-        let query = supabase.from("prayers").select("*");
+        let query = supabase
+          .from("prayers")
+          .select("*")
+          .eq("user_id", session.user.id);
         if (currentCategory !== "all prayers") {
           query = query.eq("category", currentCategory);
         }
@@ -35,22 +53,22 @@ function App() {
       }
       getPrayers();
     },
-    [currentCategory]
+    [currentCategory, session]
   );
 
   return (
     <div id="root">
       <Header
-        isLoggedIn={isLoggedIn}
+        isLoggedIn={!!session}
         showForm={showForm}
         setShowForm={setShowForm}
       />
 
       {/* Show About only when not logged in */}
-      {!isLoggedIn && <About />}
+      {!session && <About />}
 
       {/* Show main app content only when logged in or user wants to test */}
-      {isLoggedIn && (
+      {session && (
         <>
           {/* Optional form */}
           {showForm && (

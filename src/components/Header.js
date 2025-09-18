@@ -1,12 +1,18 @@
 import { useState } from "react";
 import SignupModal from "./SignupForm";
+import LoginModal from "./LoginForm";
+import supabase from "../supabaseClient";
 
 function Header({ isLoggedIn, showForm, setShowForm }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [modalType, setModalType] = useState(null);
 
-  const handleCloseModal = () => {
-    setIsOpen(false);
-  };
+  const handleCloseModal = () => setModalType(null);
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+    setModalType(null);
+    setShowForm(false);
+  }
 
   return (
     <header className="header">
@@ -15,21 +21,31 @@ function Header({ isLoggedIn, showForm, setShowForm }) {
         <h1>Daily Bread Journal</h1>
       </div>
       {isLoggedIn ? (
-        <button
-          className="btn btn-large btn-share"
-          onClick={() => setShowForm((showForm) => !showForm)}
-        >
-          {showForm ? "Close" : "Add New Prayer"}
-        </button>
+        <div className="auth-buttons">
+          <button
+            className="btn"
+            onClick={() => setShowForm((showForm) => !showForm)}
+          >
+            {showForm ? "Close" : "Add New Prayer"}
+          </button>
+          <button className="btn" onClick={handleLogout}>
+            Log Out
+          </button>
+        </div>
       ) : (
         <div className="auth-buttons">
-          <button className="btn btn-large">Log In</button>
-          <button className="btn btn-large" onClick={() => setIsOpen(true)}>
+          <button className="btn" onClick={() => setModalType("login")}>
+            Log In
+          </button>
+          <button className="btn" onClick={() => setModalType("signup")}>
             Sign Up
           </button>
-          {isOpen ? (
-            <SignupModal isOpen={isOpen} onClose={handleCloseModal} />
-          ) : null}
+          {modalType === "login" && (
+            <LoginModal isOpen={true} onClose={handleCloseModal} />
+          )}
+          {modalType === "signup" && (
+            <SignupModal isOpen={true} onClose={handleCloseModal} />
+          )}
         </div>
       )}
     </header>

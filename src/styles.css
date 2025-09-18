@@ -113,6 +113,11 @@ h1 {
   color: var(--text-secondary);
 }
 
+.btn-category:focus {
+  opacity: 0.8;
+  background-color: rgb(152, 152, 255);
+}
+
 .btn-category:hover {
   background-color: rgb(152, 152, 255);
   transition: 0.4s;
