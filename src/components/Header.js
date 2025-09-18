@@ -1,4 +1,13 @@
+import { useState } from "react";
+import SignupModal from "./SignupForm";
+
 function Header({ isLoggedIn, showForm, setShowForm }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
+
   return (
     <header className="header">
       <div className="logo">
@@ -15,7 +24,12 @@ function Header({ isLoggedIn, showForm, setShowForm }) {
       ) : (
         <div className="auth-buttons">
           <button className="btn btn-large">Log In</button>
-          <button className="btn btn-large">Sign Up</button>
+          <button className="btn btn-large" onClick={() => setIsOpen(true)}>
+            Sign Up
+          </button>
+          {isOpen ? (
+            <SignupModal isOpen={isOpen} onClose={handleCloseModal} />
+          ) : null}
         </div>
       )}
     </header>

@@ -1,6 +1,7 @@
 import { useState } from "react";
+import supabase from "../supabaseClient";
 
-function AddPrayerForm({ categories, setShowForm }) {
+function AddPrayerForm({ categories, setShowForm, setPrayersList }) {
   const [text, setText] = useState("");
   const [category, setCategory] = useState("");
   const [isUploading, setIsUploading] = useState(false);
@@ -14,8 +15,24 @@ function AddPrayerForm({ categories, setShowForm }) {
     }
   }
 
+  async function handleSubmit(ev) {
+    ev.preventDefault();
+    if (text && category) {
+      setIsUploading(true);
+      const { data: newPrayer, error } = await supabase
+        .from("prayers")
+        .insert([{ text, category }])
+        .select();
+      setIsUploading(false);
+      if (!error) setPrayersList((prev) => [newPrayer[0], ...prev]);
+      else alert("An error occurred inserting data.");
+      setText("");
+      setShowForm(false);
+    }
+  }
+
   return (
-    <form className="prayer-form">
+    <form className="prayer-form" onSubmit={handleSubmit}>
       <input
         type="text"
         placeholder="Add new prayer..."
