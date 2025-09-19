@@ -1,7 +1,7 @@
 import { useState } from "react";
 import supabase from "../supabaseClient";
 
-function LoginModal({ isOpen, onClose }) {
+function LoginModal({ isOpen, onClose, setUsername }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -9,7 +9,7 @@ function LoginModal({ isOpen, onClose }) {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const { _, error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -17,7 +17,17 @@ function LoginModal({ isOpen, onClose }) {
     if (error) {
       setMessage(error.message);
     } else {
-      setMessage("You are being logged in.");
+      const { data: profile, error } = await supabase
+        .from("user_profiles")
+        .select("username")
+        .eq("id", data.user.id)
+        .single();
+
+      if (error) {
+        setMessage("Failed to fetch username");
+      } else {
+        setUsername(profile.username);
+      }
     }
   };
 

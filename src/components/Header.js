@@ -3,7 +3,7 @@ import SignupModal from "./SignupForm";
 import LoginModal from "./LoginForm";
 import supabase from "../supabaseClient";
 
-function Header({ isLoggedIn, showForm, setShowForm }) {
+function Header({ isLoggedIn, showForm, setShowForm, username, setUsername }) {
   const [modalType, setModalType] = useState(null);
 
   const handleCloseModal = () => setModalType(null);
@@ -34,17 +34,30 @@ function Header({ isLoggedIn, showForm, setShowForm }) {
         </div>
       ) : (
         <div className="auth-buttons">
-          <button className="btn" onClick={() => setModalType("login")}>
+          <button
+            className="btn"
+            onClick={() => setModalType("login")}
+            setUsername={setUsername}
+          >
             Log In
           </button>
           <button className="btn" onClick={() => setModalType("signup")}>
             Sign Up
           </button>
           {modalType === "login" && (
-            <LoginModal isOpen={true} onClose={handleCloseModal} />
+            <LoginModal
+              isOpen={true}
+              onClose={handleCloseModal}
+              setUsername={setUsername}
+            />
           )}
           {modalType === "signup" && (
-            <SignupModal isOpen={true} onClose={handleCloseModal} />
+            <SignupModal
+              isOpen={true}
+              username={username}
+              setUsername={setUsername}
+              onClose={handleCloseModal}
+            />
           )}
         </div>
       )}

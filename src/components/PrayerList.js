@@ -1,4 +1,4 @@
-function PrayerList({ prayersList, setPrayersList, categories }) {
+function PrayerList({ prayersList, username, categories }) {
   if (prayersList.length === 0) {
     return (
       <p className="message">
@@ -8,7 +8,7 @@ function PrayerList({ prayersList, setPrayersList, categories }) {
   }
   return (
     <section>
-      <p className="message">Your Prayers</p>
+      <p className="message">{username}'s Prayers</p>
       <ul>
         {prayersList.map((prayer) => (
           <li className="prayer">

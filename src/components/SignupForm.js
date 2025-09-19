@@ -1,7 +1,7 @@
 import { useState } from "react";
 import supabase from "../supabaseClient";
 
-function SignupModal({ isOpen, onClose }) {
+function SignupModal({ isOpen, onClose, username, setUsername }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -9,7 +9,7 @@ function SignupModal({ isOpen, onClose }) {
   const handleSignUp = async (e) => {
     e.preventDefault();
 
-    const { _, error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
     });
@@ -17,6 +17,15 @@ function SignupModal({ isOpen, onClose }) {
     if (error) {
       setMessage(error.message);
     } else {
+      if (data.user) {
+        await supabase.from("public.user_profiles").insert([
+          {
+            id: data.user.id,
+            email: data.user.email,
+            username: username,
+          },
+        ]);
+      }
       setMessage("✨ Check your email to confirm your account.");
     }
   };
@@ -31,6 +40,14 @@ function SignupModal({ isOpen, onClose }) {
         </button>
         <form className="auth-form" onSubmit={handleSignUp}>
           <h2 className="form-title">Create an Account</h2>
+          <label>Username</label>
+          <input
+            type="username"
+            placeholder="What do you want to be called?"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
           <label>Email</label>
           <input
             type="email"

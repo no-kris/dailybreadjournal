@@ -9,6 +9,7 @@ import "./styles.css";
 
 function App() {
   const [session, setSession] = useState(null);
+  const [username, setUsername] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [prayersList, setPrayersList] = useState([]);
@@ -20,6 +21,9 @@ function App() {
     { name: "Healing", color: "#16a34a" },
   ];
 
+  {
+    /* Persist data using supabase session */
+  }
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -34,6 +38,9 @@ function App() {
     return () => subscription.unsubscribe();
   }, []);
 
+  {
+    /* Fetch prayers list for current user from Prayers table in supabase. */
+  }
   useEffect(
     function () {
       async function getPrayers() {
@@ -56,12 +63,34 @@ function App() {
     [currentCategory, session]
   );
 
+  {
+    /* Fetch the username from user_profiles table in supabase. */
+  }
+  useEffect(() => {
+    if (!session) return;
+
+    async function getUsername() {
+      const { data: profile, error } = await supabase
+        .from("user_profiles")
+        .select("username")
+        .eq("id", session.user.id)
+        .single();
+
+      if (!error) setUsername(profile.username);
+      else console.error("Failed to fetch username:", error.message);
+    }
+
+    getUsername();
+  }, [session]);
+
   return (
     <div id="root">
       <Header
         isLoggedIn={!!session}
         showForm={showForm}
         setShowForm={setShowForm}
+        username={username}
+        setUsername={setUsername}
       />
 
       {/* Show About only when not logged in */}
@@ -92,6 +121,7 @@ function App() {
                 prayersList={prayersList}
                 setPrayersList={setPrayersList}
                 categories={categories}
+                username={username}
               />
             )}
           </main>
