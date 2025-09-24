@@ -119,8 +119,8 @@ function App() {
                 username={username}
               />
             )}
-            <DeleteAccount />
           </main>
+          <DeleteAccount />
         </>
       )}
     </div>

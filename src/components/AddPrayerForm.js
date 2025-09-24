@@ -53,9 +53,7 @@ function AddPrayerForm({ categories, setShowForm, setPrayersList }) {
         onChange={(ev) => setCategory(ev.target.value)}
         disabled={isUploading}
       >
-        <option value="" selected>
-          Choose a category
-        </option>
+        <option value="">Choose a category</option>
         {categories.map((cat) => (
           <option key={cat.name} value={cat.name}>
             {cat.name}

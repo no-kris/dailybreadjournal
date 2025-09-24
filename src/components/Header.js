@@ -34,11 +34,7 @@ function Header({ isLoggedIn, showForm, setShowForm, username, setUsername }) {
         </div>
       ) : (
         <div className="auth-buttons">
-          <button
-            className="btn"
-            onClick={() => setModalType("login")}
-            setUsername={setUsername}
-          >
+          <button className="btn" onClick={() => setModalType("login")}>
             Log In
           </button>
           <button className="btn" onClick={() => setModalType("signup")}>

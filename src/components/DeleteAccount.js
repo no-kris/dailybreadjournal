@@ -7,7 +7,7 @@ function DeleteAccount() {
   const handleCloseModal = () => setDeleteClicked(false);
 
   return (
-    <section>
+    <section className="delete-account-section">
       <p>Want to delete account?</p>
       <button className="btn btn-delete" onClick={() => setDeleteClicked(true)}>
         Delete My Account

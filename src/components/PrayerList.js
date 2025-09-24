@@ -11,7 +11,7 @@ function PrayerList({ prayersList, username, categories }) {
       <p className="message">{username}'s Prayers</p>
       <ul>
         {prayersList.map((prayer) => (
-          <li className="prayer">
+          <li className="prayer" key={prayer.category}>
             <p>{prayer.text}</p>
             <span
               className="tag"
