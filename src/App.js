@@ -6,6 +6,7 @@ import AddPrayerForm from "./components/AddPrayerForm";
 import About from "./components/About";
 import supabase from "./supabaseClient";
 import "./styles.css";
+import DeleteAccount from "./components/DeleteAccount";
 
 function App() {
   const [session, setSession] = useState(null);
@@ -21,9 +22,7 @@ function App() {
     { name: "Healing", color: "#16a34a" },
   ];
 
-  {
-    /* Persist data using supabase session */
-  }
+  /* Persist data using supabase session */
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -38,9 +37,7 @@ function App() {
     return () => subscription.unsubscribe();
   }, []);
 
-  {
-    /* Fetch prayers list for current user from Prayers table in supabase. */
-  }
+  /* Fetch prayers list for current user from Prayers table in supabase. */
   useEffect(
     function () {
       async function getPrayers() {
@@ -63,9 +60,7 @@ function App() {
     [currentCategory, session]
   );
 
-  {
-    /* Fetch the username from user_profiles table in supabase. */
-  }
+  /* Fetch the username from user_profiles table in supabase. */
   useEffect(() => {
     if (!session) return;
 
@@ -124,6 +119,7 @@ function App() {
                 username={username}
               />
             )}
+            <DeleteAccount />
           </main>
         </>
       )}

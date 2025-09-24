@@ -89,15 +89,16 @@ h1 {
   transform: scale(1.01);
 }
 
-.btn-large {
-  font-size: 20px;
-  padding: 20px 32px 16px;
-}
-
 .auth-buttons {
   display: flex;
   align-items: center;
   gap: 20px;
+}
+
+.btn-delete {
+  background-color: red;
+  padding: 5px 7px;
+  font-size: 14px;
 }
 
 .btn-all-categories {
@@ -114,8 +115,8 @@ h1 {
 }
 
 .btn-category:focus {
-  opacity: 0.8;
-  background-color: rgb(152, 152, 255);
+  outline: 2px solid rgb(152, 152, 255);
+  z-index: 99;
 }
 
 .btn-category:hover {
