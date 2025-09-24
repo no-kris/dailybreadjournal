@@ -66,7 +66,6 @@ h1 {
 
 .header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
   gap: 40px;
   border-bottom: 1px solid var(--border);
@@ -324,7 +323,6 @@ p {
 
   .header {
     flex-direction: column;
-    gap: 20px;
     align-items: flex-start;
   }
 
@@ -394,16 +392,16 @@ p {
   .btn-delete {
     padding: 7px;
   }
+
+  .auth-buttons {
+    justify-content: space-between;
+  }
 }
 
 /* Small mobile devices (≤ 480px) */
 @media (max-width: 480px) {
   body {
     padding: 16px;
-  }
-
-  h1 {
-    font-size: 26px;
   }
 
   .main {
@@ -423,11 +421,6 @@ p {
 
   .btn-delete {
     font-size: 12px;
-  }
-
-  .logo-img {
-    height: 44px;
-    width: 44px;
   }
 
   .auth-form {
