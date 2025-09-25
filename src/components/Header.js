@@ -1,16 +1,8 @@
-import { useState } from "react";
-import SignupModal from "./SignupForm";
-import LoginModal from "./LoginForm";
 import supabase from "../supabaseClient";
 
-function Header({ isLoggedIn, showForm, setShowForm, username, setUsername }) {
-  const [modalType, setModalType] = useState(null);
-
-  const handleCloseModal = () => setModalType(null);
-
+function Header({ isLoggedIn, showForm, setShowForm }) {
   async function handleLogout() {
     await supabase.auth.signOut();
-    setModalType(null);
     setShowForm(false);
   }
 
@@ -32,31 +24,7 @@ function Header({ isLoggedIn, showForm, setShowForm, username, setUsername }) {
             Log Out
           </button>
         </div>
-      ) : (
-        <div className="auth-buttons">
-          <button className="btn" onClick={() => setModalType("login")}>
-            Log In
-          </button>
-          <button className="btn" onClick={() => setModalType("signup")}>
-            Sign Up
-          </button>
-          {modalType === "login" && (
-            <LoginModal
-              isOpen={true}
-              onClose={handleCloseModal}
-              setUsername={setUsername}
-            />
-          )}
-          {modalType === "signup" && (
-            <SignupModal
-              isOpen={true}
-              username={username}
-              setUsername={setUsername}
-              onClose={handleCloseModal}
-            />
-          )}
-        </div>
-      )}
+      ) : null}
     </header>
   );
 }

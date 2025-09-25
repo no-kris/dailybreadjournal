@@ -7,22 +7,25 @@ function PrayerList({ prayersList, username, categories }) {
     );
   }
   return (
-    <section>
+    <section className="prayer-list">
       <p className="message">{username}'s Prayers</p>
       <ul>
         {prayersList.map((prayer) => (
           <li className="prayer" key={prayer.category}>
             <p>{prayer.text}</p>
-            <span
-              className="tag"
-              style={{
-                backgroundColor: categories.find(
-                  (cat) => cat.name === prayer.category
-                )?.color,
-              }}
-            >
-              {prayer.category}
-            </span>
+            <div className="prayer-meta">
+              <span
+                className="tag"
+                style={{
+                  backgroundColor: categories.find(
+                    (cat) => cat.name === prayer.category
+                  )?.color,
+                }}
+              >
+                {prayer.category}
+              </span>
+              {new Date(prayer.created_at).toLocaleDateString()}
+            </div>
           </li>
         ))}
       </ul>

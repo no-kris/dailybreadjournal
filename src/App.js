@@ -6,7 +6,7 @@ import AddPrayerForm from "./components/AddPrayerForm";
 import About from "./components/About";
 import supabase from "./supabaseClient";
 import "./styles.css";
-import DeleteAccount from "./components/DeleteAccount";
+import AccountSettings from "./components/AccountSettings";
 
 function App() {
   const [session, setSession] = useState(null);
@@ -84,17 +84,15 @@ function App() {
         isLoggedIn={!!session}
         showForm={showForm}
         setShowForm={setShowForm}
-        username={username}
         setUsername={setUsername}
       />
 
       {/* Show About only when not logged in */}
-      {!session && <About />}
+      {!session && <About username={username} setUsername={setUsername} />}
 
-      {/* Show main app content only when logged in or user wants to test */}
+      {/* Show main app content only when logged in */}
       {session && (
         <>
-          {/* Optional form */}
           {showForm && (
             <AddPrayerForm
               categories={categories}
@@ -120,7 +118,7 @@ function App() {
               />
             )}
           </main>
-          <DeleteAccount />
+          <AccountSettings />
         </>
       )}
     </div>
