@@ -10,7 +10,7 @@ function AccountSettings() {
     <section className="account-settings">
       <h3>Account Settings</h3>
       <button className="btn btn-update" onClick={() => setIsClicked(true)}>
-        Update Account
+        My Account
       </button>
       {isClicked ? (
         <UpdateAccountModal isOpen={true} onClose={handleCloseModal} />
