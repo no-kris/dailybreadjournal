@@ -46,7 +46,8 @@ function App() {
         let query = supabase
           .from("prayers")
           .select("*")
-          .eq("user_id", session.user.id);
+          .eq("user_id", session.user.id)
+          .order("created_at", { ascending: false });
         if (currentCategory !== "all prayers") {
           query = query.eq("category", currentCategory);
         }
